@@ -1,15 +1,16 @@
 package com.example.popularlibraries.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.popularlibraries.R
 import com.example.popularlibraries.databinding.ActivityMainBinding
 import com.example.popularlibraries.inteface.IMainView
+import com.example.popularlibraries.presenter.CounterType
 import com.example.popularlibraries.presenter.MainPresenter
 
-class MainActivity : AppCompatActivity() ,IMainView{
-    lateinit var binding:ActivityMainBinding
+class MainActivity : AppCompatActivity(), IMainView {
+    lateinit var binding: ActivityMainBinding
     private val presenter = MainPresenter(this)
 
 
@@ -18,20 +19,25 @@ class MainActivity : AppCompatActivity() ,IMainView{
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val listener = View.OnClickListener {
-            presenter.counterClick(it.id)
+            val type = when (it.id) {
+                R.id.btn_counter_one -> CounterType.ONE
+                R.id.btn_counter_two -> CounterType.TWO
+                R.id.btn_counter_three -> CounterType.THREE
+                else -> throw IllegalStateException("Error")
+            }
+            presenter.counterClick(type)
         }
-
         binding.btnCounterOne.setOnClickListener(listener)
         binding.btnCounterTwo.setOnClickListener(listener)
         binding.btnCounterThree.setOnClickListener(listener)
     }
-
-    //Подсказка к ПЗ: поделить на 3 отдельные функции и избавиться от index
-    override fun setButtonText(index: Int, text: String) {
-        when(index){
-            0 ->  binding.btnCounterOne.text = text
-            1 ->  binding.btnCounterTwo.text = text
-            2 ->  binding.btnCounterThree.text = text
-        }
+    override fun setButtonTextOne(text: String) {
+        binding.btnCounterOne.text = text
+    }
+    override fun setButtonTextTwo(text: String) {
+        binding.btnCounterTwo.text = text
+    }
+    override fun setButtonTextThree(text: String) {
+        binding.btnCounterThree.text = text
     }
 }
