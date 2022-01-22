@@ -3,21 +3,31 @@ package com.example.popularlibraries.presenter
 import com.example.popularlibraries.model.CountersModel
 import com.example.popularlibraries.view.MainActivity
 
-class MainPresenter(var view: MainActivity) {
+class MainPresenter() {
     private val model = CountersModel()
-    fun counterClick(type: CounterType) {
-        when (type) {
+    fun counterClick(type: CounterType):String {
+        return when (type) {
             CounterType.ONE -> {
-                val nextValue = model.next(0)
-                view.setButtonTextOne(nextValue.toString())
+                model.next(0).toString()
             }
             CounterType.TWO -> {
-                val nextValue = model.next(1)
-                view.setButtonTextTwo(nextValue.toString())
+                model.next(1).toString()
             }
             CounterType.THREE -> {
-                val nextValue = model.next(2)
-                view.setButtonTextThree(nextValue.toString())
+                model.next(2).toString()
+            }
+        }
+    }
+    fun setCounters(type: CounterType):String{
+        return when (type) {
+            CounterType.ONE -> {
+                model.getCurrent(0).toString()
+            }
+            CounterType.TWO -> {
+                model.getCurrent(1).toString()
+            }
+            CounterType.THREE -> {
+                model.getCurrent(2).toString()
             }
         }
     }

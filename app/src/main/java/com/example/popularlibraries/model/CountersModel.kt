@@ -1,9 +1,9 @@
 package com.example.popularlibraries.model
 
 class CountersModel {
-    private val counters = mutableListOf(0, 0, 0)
+    private val counters = mutableListOf(3, 2, 1)
 
-    private fun getCurrent(index: Int): Int {
+    fun getCurrent(index: Int): Int {
         return counters[index]
     }
     fun next(index: Int): Int {
