@@ -1,40 +1,26 @@
 package com.example.popularlibraries.presenter
 
+import com.example.popularlibraries.interfaces.IScreens
+import com.example.popularlibraries.interfaces.IUserListPresenter
+import com.example.popularlibraries.interfaces.MainView
+import com.example.popularlibraries.interfaces.UserItemView
 import com.example.popularlibraries.model.CountersModel
+import com.example.popularlibraries.model.GithubUser
+import com.example.popularlibraries.repository.GithubUsersRepo
 import com.example.popularlibraries.view.MainActivity
+import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 
-class MainPresenter() {
-    private val model = CountersModel()
-    fun counterClick(type: CounterType):String {
-        return when (type) {
-            CounterType.ONE -> {
-                model.next(0).toString()
-            }
-            CounterType.TWO -> {
-                model.next(1).toString()
-            }
-            CounterType.THREE -> {
-                model.next(2).toString()
-            }
-        }
-    }
-    fun setCounters(type: CounterType):String{
-        return when (type) {
-            CounterType.ONE -> {
-                model.getCurrent(0).toString()
-            }
-            CounterType.TWO -> {
-                model.getCurrent(1).toString()
-            }
-            CounterType.THREE -> {
-                model.getCurrent(2).toString()
-            }
-        }
-    }
-}
+class MainPresenter(val router: Router, val screens: IScreens) : MvpPresenter<MainView>() {
 
-enum class CounterType {
-    ONE,
-    TWO,
-    THREE
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        router.replaceScreen(screens.users())
+    }
+
+    fun backClicked() {
+        router.exit()
+    }
+
+
 }
